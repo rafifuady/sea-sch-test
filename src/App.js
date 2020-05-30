@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { Provider } from 'react-redux';
+
 import './App.css';
 
+import Landing from "./pages/Landing";
+
+import reduxStore from './redux/store';
+
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  return (  
+    <React.Fragment>
+      <Provider store={reduxStore}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route component={() => <div>404 Not Found ErrorPage</div>} />
+          </Switch>
+        </Router>
+      </Provider>
+    </React.Fragment>
   );
 }
 
