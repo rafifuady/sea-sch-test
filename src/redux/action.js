@@ -33,7 +33,7 @@ export const fetchUniApiAction = () => {
         type: 'FETCH_UAPI_SUCCESS',
         payload: res.data
       })
-      // console.log(res.data.data[0])
+      console.log(res.data)
     })
     .catch(err => {
       dispatch({
@@ -52,11 +52,31 @@ export const fetchTeApiAction = () => {
         type: 'FETCH_TAPI_SUCCESS',
         payload: res.data.data
       })
-      console.log(res.data.data)
+      // console.log(res.data.data)
     })
     .catch(err => {
       dispatch({
         type: 'FETCH_TAPI_FAILED'
+      })
+      throw err
+    })
+  }
+}
+
+export const fetchFaApiAction = () => {
+  return(dispatch) => {
+    dispatch(fetchApi())
+    axios.get('https://form.v2.support.garena.co.id/_/items/sea_scholarship_faculty?access_token=wahyutampan')
+    .then(res => {
+      dispatch({
+        type: 'FETCH_FAPI_SUCCESS',
+        payload: res.data.data
+      })
+      // console.log(res.data.data)
+    })
+    .catch(err => {
+      dispatch({
+        type: 'FETCH_FAPI_FAILED'
       })
       throw err
     })

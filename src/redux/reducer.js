@@ -3,7 +3,7 @@ const appState = {
     loading: false,
     data: {} ,
     uni:{},
-    faculty:{},
+    faculty:[],
     testimony:[]
   }
 }
@@ -73,6 +73,24 @@ const app = (state = { ...appState }, action) => {
           loading: false,
         },
       };
+      case "FETCH_FAPI_SUCCESS":
+        console.log(action.payload)
+        return {
+          ...state,
+          contentData: {
+            ...state.contentData,
+            faculty: action.payload,
+            loading: false,
+          },
+        };
+      case "FETCH_FAPI_FAILED":
+        return {
+          ...state,
+          contentData: {
+            ...state.contentData,
+            loading: false,
+          },
+        };
       default:
         return state;
   }

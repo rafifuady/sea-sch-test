@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux'
-import { fetchApiAction,fetchApi, fetchUniApiAction, fetchTeApiAction } from '../../redux/action';
+import { fetchApiAction,fetchApi, fetchUniApiAction,fetchFaApiAction, fetchTeApiAction } from '../../redux/action';
 
 import Logo from '../../Slicing/Sea-Undergraduate-Logo.png'
 import bGHead from '../../Slicing/BG-Head.jpg'
@@ -23,15 +23,16 @@ class Landing extends React.Component{
       this.props.fetchApiAction()
       this.props.fetchUniApiAction()
       this.props.fetchTeApiAction()
-      // console.log(this.props)
+      this.props.fetchFaApiAction()
+      console.log(this.props)
 
   }
 
   render() {
     // console.log(this.props)
-    const { contentData } = this.props
+    const { contentData, faculty } = this.props
     // let seniorProg = contentData.senior_program.text()
-    // console.log(contentData)
+    console.log(faculty)
     return(
       <React.Fragment>
         
@@ -74,17 +75,14 @@ class Landing extends React.Component{
           <h1 style={{textAlign:'center'}} id='program'>Undergraduate Program</h1>
           <p>{ contentData.program_content
           }</p>
-          <div class="pure-g">
-            <div class='pure-u-1-2'>
-              <div class='card'>
-                {contentData.freshman_program}
-              </div>
+          <div class="row">
+            <div class='col'>
+                <h5>Freshman Program</h5>
+                <div dangerouslySetInnerHTML={{ __html: contentData.freshman_program}} />
             </div>
-            <div class='pure-u-1-2'>
-            <div class='card'>
-              {contentData.senior_program}
-                {/* {seniorProg} */}
-              </div>
+            <div class='col'>
+            <h5>Senior Program</h5>
+              <div dangerouslySetInnerHTML={{ __html: contentData.senior_program}} />
             </div>
           </div>
         </div>
@@ -98,7 +96,7 @@ class Landing extends React.Component{
                     <img src={Uni1} class="img-fluid" alt={Uni1}></img>
                   </div>
                   <div class="col-6">
-                    a
+                    
                   </div>
                 </div>
               </div>
@@ -239,8 +237,8 @@ class Landing extends React.Component{
         </div>
         <div>
           <h1 style={{textAlign:'center'}} id='FAQ'>FAQ</h1>
-          <div class="container">
-            {contentData.faq_content}
+          <div class="container" id='faq_content'>
+            <div dangerouslySetInnerHTML={{ __html: contentData.faq_content}} />
           </div>
         </div>
         <div>
@@ -261,13 +259,15 @@ class Landing extends React.Component{
 const mapStateToProps = state => ({
   contentData: state.contentData.data,
   univ: state.contentData.uni,
-  testimony: state.contentData.testimony
+  testimony: state.contentData.testimony,
+  faculty: state.contentData.faculty
 })
 
 const mapDispatchToProps = {
   fetchApi,
   fetchApiAction,
   fetchUniApiAction,
-  fetchTeApiAction
+  fetchTeApiAction,
+  fetchFaApiAction
 }
 export default connect (mapStateToProps, mapDispatchToProps)(Landing)
